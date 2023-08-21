@@ -15,6 +15,25 @@ Spring:
           uri: lb://JOB-SERVICE
           predicates:
             - Path=/job/**
+          filters:
+            - keyCloakFilter
+
+  security:
+    oauth2:
+      client:
+        registration:
+          oauth2-client-credentials:
+            client-id: microservice-auth
+            client-secret: chcNR9fYhMr5zDmWq238DxgZ7cyktTZN
+            scope: read,write
+            provider: auth-service
+            authorization-grant-type: password
+        provider:
+          keycloak:
+            issuer-uri: http://localhost:9300/realms/springboot-microservice-realm
+            token-uri: http://localhost:9300/realms/springboot-microservice-realm/protocol/openid-connect/token
+            end-session-uri: http://localhost:9300/realms/springboot-microservice-realm/protocol/openid-connect/logout
+            instrospect-uri: http://localhost:9300/realms/springboot-microservice-realm/protocol/openid-connect/token/introspect
 
 eureka:
   client:
